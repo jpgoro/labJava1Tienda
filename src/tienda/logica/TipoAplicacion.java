@@ -5,8 +5,8 @@ package tienda.logica;
  * @author Gorosito Juan
  */
 public enum TipoAplicacion {
-    COCINA, 
+    COCINA,
     PISOS,
-    ROPA, 
+    ROPA,
     MULTIUSO;
 }

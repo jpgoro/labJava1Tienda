@@ -1,4 +1,3 @@
-
 package tienda.logica;
 
 /**
@@ -6,6 +5,7 @@ package tienda.logica;
  * @author Gorosito Juan
  */
 public abstract class Producto {
+
     protected String id_prod;
     protected String descripcion;
     protected int cantStock;
@@ -21,10 +21,9 @@ public abstract class Producto {
         this.costoUnidad = costoUnidad;
         this.disponibleVentas = disponibleVentas;
     }
-    
+
     /*public abstract void vender(int cantidad);
     public abstract void reponerStock(int cantidad);*/
-
     public String getId_prod() {
         return id_prod;
     }
@@ -71,5 +70,5 @@ public abstract class Producto {
 
     public void setDisponibleVentas(boolean disponibleVentas) {
         this.disponibleVentas = disponibleVentas;
-    }   
+    }
 }

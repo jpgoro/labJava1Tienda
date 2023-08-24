@@ -1,4 +1,3 @@
-
 package tienda.logica;
 
 import java.time.LocalDate;
@@ -8,7 +7,8 @@ import tienda.util.FechaUtil;
  *
  * @author Gorosito Juan
  */
-public class ProductoEnvasado extends Producto implements Comestible, Descuento{
+public class ProductoEnvasado extends Producto implements Comestible, Descuento {
+
     private String tipoEnvase;
     private LocalDate fechaVencimiento;
     private int calorias;
@@ -17,33 +17,31 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
 
     public ProductoEnvasado(String tipoEnvase, int calorias, double porcentajeDescuento, boolean esImportado, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponibleVentas) {
         super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponibleVentas);
-        
+
         if (!validarIdentificador(id_prod)) {
             throw new IllegalArgumentException("Identificador inválido para producto envasado");
         }
         // Generar fecha de vencimiento aleatoria utilizando FechaUtil
         this.fechaVencimiento = FechaUtil.generarFechaVencimientoAleatoria();
-        
+
         this.tipoEnvase = tipoEnvase;
         this.calorias = calorias;
         this.porcentajeDescuento = porcentajeDescuento;
         this.esImportado = esImportado;
     }
 
-    
-
     private boolean validarIdentificador(String id_prod) {
         // Verificar si el identificador cumple con el formato ABXXX
         if (id_prod.length() != 5) {
             return false;
         }
-        
+
         String prefijo = id_prod.substring(0, 2);
         String digitos = id_prod.substring(2);
 
         return prefijo.equals("AB") && digitos.matches("\\d{3}");
     }
-    
+
     /*@Override
     public void vender(int cantidad) {
         if (disponibleVentas && cantidad <= cantStock) {
@@ -53,15 +51,11 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
             System.out.println("No se puede realizar la venta");
         }
     }*/
-    
-    /*@Override
+ /*@Override
     public void reponerStock(int cantidad) {
         cantStock += cantidad;
         System.out.println("Se han repuesto " + cantidad + " unidades de producto envasado");
     }*/
-    
-    
-
     public String getTipoEnvase() {
         return tipoEnvase;
     }
@@ -70,11 +64,11 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
         this.tipoEnvase = tipoEnvase;
     }
 
-
     @Override
     public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
+
     @Override
     public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
@@ -109,6 +103,9 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
         return precioUnitario - (precioUnitario * porcentajeDescuento / 100);
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "ProductoEnvasado{" + "tipoEnvase=" + tipoEnvase + ", fechaVencimiento=" + fechaVencimiento + ", calorias=" + calorias + ", porcentajeDescuento=" + porcentajeDescuento + ", esImportado=" + esImportado + '}';
+    }
+
 }

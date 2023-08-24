@@ -1,11 +1,11 @@
-
 package tienda.logica;
 
 /**
  *
  * @author Gorosito Juan
  */
-public class ProductoLimpieza extends Producto implements Descuento{
+public class ProductoLimpieza extends Producto implements Descuento {
+
     private TipoAplicacion tipoAplicacion;
     private double porcentajeDescuento;
 
@@ -14,24 +14,23 @@ public class ProductoLimpieza extends Producto implements Descuento{
         if (!validarIdentificador(id_prod)) {
             throw new IllegalArgumentException("Identificador inválido para producto de limpieza");
         }
-        
+
         this.tipoAplicacion = tipoAplicacion;
         this.porcentajeDescuento = porcentajeDescuento;
     }
 
-    
     private boolean validarIdentificador(String id_prod) {
         // Verificar si el identificador cumple con el formato AZXXX
         if (id_prod.length() != 5) {
             return false;
         }
-        
+
         String prefijo = id_prod.substring(0, 2);
         String digitos = id_prod.substring(2);
 
         return prefijo.equals("AZ") && digitos.matches("\\d{3}");
     }
-    
+
     /*@Override
     public void vender(int cantidad) {
         if (disponibleVentas && cantidad <= cantStock) {
@@ -47,7 +46,6 @@ public class ProductoLimpieza extends Producto implements Descuento{
         cantStock += cantidad;
         System.out.println("Se han repuesto " + cantidad + " unidades de producto de limpieza");
     }*/
-
     public TipoAplicacion getTipoAplicacion() {
         return tipoAplicacion;
     }
@@ -74,6 +72,12 @@ public class ProductoLimpieza extends Producto implements Descuento{
     public double calcularPrecioVentaConDescuento() {
         return precioUnitario - (precioUnitario * porcentajeDescuento / 100);
     }
+
+    @Override
+    public String toString() {
+        return "ProductoLimpieza{" + "tipoAplicacion=" + tipoAplicacion + ", porcentajeDescuento=" + porcentajeDescuento + '}';
+    }
     
     
+
 }

@@ -1,4 +1,3 @@
-
 package tienda.logica;
 
 import java.time.LocalDate;
@@ -8,7 +7,8 @@ import tienda.util.FechaUtil;
  *
  * @author Gorosito Juan
  */
-public class Bebida extends Producto implements Comestible, Descuento{
+public class Bebida extends Producto implements Comestible, Descuento {
+
     private boolean esAlcoholica;
     private double graduacionAlcoholica;
     private LocalDate fechaVencimiento;
@@ -21,9 +21,9 @@ public class Bebida extends Producto implements Comestible, Descuento{
         if (!validarIdentificador(id_prod)) {
             throw new IllegalArgumentException("Identificador inválido para bebida");
         }
-        
+
         this.esAlcoholica = esAlcoholica;
-        if(esAlcoholica){
+        if (esAlcoholica) {
             this.graduacionAlcoholica = graduacionAlcoholica;
         }
         // Generar fecha de vencimiento aleatoria utilizando FechaUtil
@@ -38,13 +38,13 @@ public class Bebida extends Producto implements Comestible, Descuento{
         if (id_prod.length() != 5) {
             return false;
         }
-        
+
         String prefijo = id_prod.substring(0, 2);
         String digitos = id_prod.substring(2);
 
         return prefijo.equals("AC") && digitos.matches("\\d{3}");
     }
-    
+
     /*@Override
     public void vender(int cantidad) {
         if (disponibleVentas && cantidad <= cantStock) {
@@ -60,7 +60,6 @@ public class Bebida extends Producto implements Comestible, Descuento{
         cantStock += cantidad;
         System.out.println("Se han repuesto " + cantidad + " unidades de bebida");
     }*/
-
     public boolean isEsAlcoholica() {
         return esAlcoholica;
     }
@@ -120,7 +119,11 @@ public class Bebida extends Producto implements Comestible, Descuento{
         return precioUnitario - (precioUnitario * porcentajeDescuento / 100);
     }
 
+    @Override
+    public String toString() {
+        return "Bebida{" + "esAlcoholica=" + esAlcoholica + ", graduacionAlcoholica=" + graduacionAlcoholica + ", fechaVencimiento=" + fechaVencimiento + ", calorias=" + calorias + ", porcentajeDescuento=" + porcentajeDescuento + ", esImportado=" + esImportado + '}';
+    }
     
     
-    
+
 }
