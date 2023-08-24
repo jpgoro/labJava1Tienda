@@ -11,27 +11,26 @@ public abstract class Producto {
     protected int cantStock;
     protected double precioUnitario;
     protected double costoUnidad;
-    protected boolean disponible;
-    protected boolean esImportado;
+    protected boolean disponibleVentas;
 
-    public Producto() {
-    }
-
-    public Producto(String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponible, boolean esImportado) {
+    public Producto(String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponibleVentas) {
         this.id_prod = id_prod;
         this.descripcion = descripcion;
         this.cantStock = cantStock;
         this.precioUnitario = precioUnitario;
         this.costoUnidad = costoUnidad;
-        this.disponible = disponible;
-        this.esImportado = esImportado;
+        this.disponibleVentas = disponibleVentas;
     }
-
-
     
+    /*public abstract void vender(int cantidad);
+    public abstract void reponerStock(int cantidad);*/
 
     public String getId_prod() {
         return id_prod;
+    }
+
+    public void setId_prod(String id_prod) {
+        this.id_prod = id_prod;
     }
 
     public String getDescripcion() {
@@ -66,22 +65,11 @@ public abstract class Producto {
         this.costoUnidad = costoUnidad;
     }
 
-    public boolean isDisponible() {
-        return disponible;
+    public boolean isDisponibleVentas() {
+        return disponibleVentas;
     }
 
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
-    public boolean isEsImportado() {
-        return esImportado;
-    }
-
-    public void setEsImportado(boolean esImportado) {
-        this.esImportado = esImportado;
-    }
-    
-    
-    
+    public void setDisponibleVentas(boolean disponibleVentas) {
+        this.disponibleVentas = disponibleVentas;
+    }   
 }

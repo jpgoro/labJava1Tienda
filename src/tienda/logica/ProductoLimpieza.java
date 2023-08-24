@@ -9,8 +9,8 @@ public class ProductoLimpieza extends Producto implements Descuento{
     private TipoAplicacion tipoAplicacion;
     private double porcentajeDescuento;
 
-    public ProductoLimpieza(TipoAplicacion tipoAplicacion, double porcentajeDescuento, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponible, boolean esImportado) {
-        super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponible, esImportado);
+    public ProductoLimpieza(TipoAplicacion tipoAplicacion, double porcentajeDescuento, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponibleVentas) {
+        super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponibleVentas);
         if (!validarIdentificador(id_prod)) {
             throw new IllegalArgumentException("Identificador inválido para producto de limpieza");
         }
@@ -20,7 +20,6 @@ public class ProductoLimpieza extends Producto implements Descuento{
     }
 
     
-
     private boolean validarIdentificador(String id_prod) {
         // Verificar si el identificador cumple con el formato AZXXX
         if (id_prod.length() != 5) {
@@ -32,6 +31,22 @@ public class ProductoLimpieza extends Producto implements Descuento{
 
         return prefijo.equals("AZ") && digitos.matches("\\d{3}");
     }
+    
+    /*@Override
+    public void vender(int cantidad) {
+        if (disponibleVentas && cantidad <= cantStock) {
+            cantStock -= cantidad;
+            System.out.println("Venta realizada: " + cantidad + " unidades de producto de limpieza");
+        } else {
+            System.out.println("No se puede realizar la venta");
+        }
+    }
+
+    @Override
+    public void reponerStock(int cantidad) {
+        cantStock += cantidad;
+        System.out.println("Se han repuesto " + cantidad + " unidades de producto de limpieza");
+    }*/
 
     public TipoAplicacion getTipoAplicacion() {
         return tipoAplicacion;
@@ -46,7 +61,7 @@ public class ProductoLimpieza extends Producto implements Descuento{
         if (porcentajeDescuento > 0 && porcentajeDescuento <= 100) {
             this.porcentajeDescuento = porcentajeDescuento;
         } else {
-            throw new IllegalArgumentException("Porcentaje de descuento inválido");
+            System.out.println("Porcentaje de descuento inválido: Debe estar entre 0 y 100");
         }
     }
 

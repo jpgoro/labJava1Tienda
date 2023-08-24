@@ -13,20 +13,22 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
     private LocalDate fechaVencimiento;
     private int calorias;
     private double porcentajeDescuento;
+    private boolean esImportado;
 
-    public ProductoEnvasado(String tipoEnvase, int calorias, double porcentajeDescuento, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponible, boolean esImportado) {
-        super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponible, esImportado);
+    public ProductoEnvasado(String tipoEnvase, int calorias, double porcentajeDescuento, boolean esImportado, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponibleVentas) {
+        super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponibleVentas);
+        
+        if (!validarIdentificador(id_prod)) {
+            throw new IllegalArgumentException("Identificador inválido para producto envasado");
+        }
         // Generar fecha de vencimiento aleatoria utilizando FechaUtil
         this.fechaVencimiento = FechaUtil.generarFechaVencimientoAleatoria();
+        
         this.tipoEnvase = tipoEnvase;
         this.calorias = calorias;
         this.porcentajeDescuento = porcentajeDescuento;
+        this.esImportado = esImportado;
     }
-    
-
-    
-
-   
 
     
 
@@ -41,6 +43,24 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
 
         return prefijo.equals("AB") && digitos.matches("\\d{3}");
     }
+    
+    /*@Override
+    public void vender(int cantidad) {
+        if (disponibleVentas && cantidad <= cantStock) {
+            cantStock -= cantidad;
+            System.out.println("Venta realizada: " + cantidad + " unidades de producto envasado");
+        } else {
+            System.out.println("No se puede realizar la venta");
+        }
+    }*/
+    
+    /*@Override
+    public void reponerStock(int cantidad) {
+        cantStock += cantidad;
+        System.out.println("Se han repuesto " + cantidad + " unidades de producto envasado");
+    }*/
+    
+    
 
     public String getTipoEnvase() {
         return tipoEnvase;
@@ -75,7 +95,7 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento{
         if (porcentajeDescuento > 0 && porcentajeDescuento <= 100) {
             this.porcentajeDescuento = porcentajeDescuento;
         } else {
-            throw new IllegalArgumentException("Porcentaje de descuento inválido");
+            System.out.println("Porcentaje de descuento inválido: Debe estar entre 0 y 100");
         }
     }
 

@@ -14,30 +14,24 @@ public class Bebida extends Producto implements Comestible, Descuento{
     private LocalDate fechaVencimiento;
     private int calorias;
     private double porcentajeDescuento;
+    private boolean esImportado;
 
-    public Bebida(boolean esAlcoholica, double graduacionAlcoholica, int calorias, double porcentajeDescuento, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponible, boolean esImportado) {
-        super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponible, esImportado);
-        
+    public Bebida(boolean esAlcoholica, double graduacionAlcoholica, int calorias, double porcentajeDescuento, boolean esImportado, String id_prod, String descripcion, int cantStock, double precioUnitario, double costoUnidad, boolean disponibleVentas) {
+        super(id_prod, descripcion, cantStock, precioUnitario, costoUnidad, disponibleVentas);
         if (!validarIdentificador(id_prod)) {
             throw new IllegalArgumentException("Identificador inválido para bebida");
         }
         
+        this.esAlcoholica = esAlcoholica;
         if(esAlcoholica){
             this.graduacionAlcoholica = graduacionAlcoholica;
         }
-        
-        this.esAlcoholica = esAlcoholica;
-        this.graduacionAlcoholica = graduacionAlcoholica;
         // Generar fecha de vencimiento aleatoria utilizando FechaUtil
         this.fechaVencimiento = FechaUtil.generarFechaVencimientoAleatoria();
         this.calorias = calorias;
         this.porcentajeDescuento = porcentajeDescuento;
-        
-        
+        this.esImportado = esImportado;
     }
-    
-
-    
 
     private boolean validarIdentificador(String id_prod) {
         // Verificar si el identificador cumple con el formato ACXXX
@@ -50,6 +44,22 @@ public class Bebida extends Producto implements Comestible, Descuento{
 
         return prefijo.equals("AC") && digitos.matches("\\d{3}");
     }
+    
+    /*@Override
+    public void vender(int cantidad) {
+        if (disponibleVentas && cantidad <= cantStock) {
+            cantStock -= cantidad;
+            System.out.println("Venta realizada: " + cantidad + " unidades de bebida");
+        } else {
+            System.out.println("No se puede realizar la venta");
+        }
+    }
+
+    @Override
+    public void reponerStock(int cantidad) {
+        cantStock += cantidad;
+        System.out.println("Se han repuesto " + cantidad + " unidades de bebida");
+    }*/
 
     public boolean isEsAlcoholica() {
         return esAlcoholica;
@@ -63,7 +73,7 @@ public class Bebida extends Producto implements Comestible, Descuento{
         if (esAlcoholica) {
             return graduacionAlcoholica;
         } else {
-            throw new IllegalStateException("La bebida no es alcohólica, no tiene graduación alcohólica");
+            return 0.0;
         }
     }
 
@@ -96,7 +106,7 @@ public class Bebida extends Producto implements Comestible, Descuento{
         if (porcentajeDescuento > 0 && porcentajeDescuento <= 100) {
             this.porcentajeDescuento = porcentajeDescuento;
         } else {
-            throw new IllegalArgumentException("Porcentaje de descuento inválido");
+            System.out.println("Porcentaje de descuento inválido: Debe estar entre 0 y 100");
         }
     }
 
