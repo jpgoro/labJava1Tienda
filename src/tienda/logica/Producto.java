@@ -22,8 +22,9 @@ public abstract class Producto {
         this.disponibleVentas = disponibleVentas;
     }
 
-    /*public abstract void vender(int cantidad);
-    public abstract void reponerStock(int cantidad);*/
+    public abstract void vender(int cantidad);
+
+    //public abstract void reponerStock(int cantidad);
     public String getId_prod() {
         return id_prod;
     }

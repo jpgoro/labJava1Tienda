@@ -77,6 +77,16 @@ public class ProductoLimpieza extends Producto implements Descuento {
     public String toString() {
         return "ProductoLimpieza{" + "tipoAplicacion=" + tipoAplicacion + ", porcentajeDescuento=" + porcentajeDescuento + '}';
     }
+
+    @Override
+    public void vender(int cantidad) {
+         if (disponibleVentas && cantidad <= cantStock) {
+        cantStock -= cantidad;
+        System.out.println("Venta realizada: " + cantidad + " unidades de producto envasado");
+    } else {
+        System.out.println("No se puede realizar la venta");
+    }
+    }
     
     
 

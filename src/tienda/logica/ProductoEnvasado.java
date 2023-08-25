@@ -42,15 +42,6 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento 
         return prefijo.equals("AB") && digitos.matches("\\d{3}");
     }
 
-    /*@Override
-    public void vender(int cantidad) {
-        if (disponibleVentas && cantidad <= cantStock) {
-            cantStock -= cantidad;
-            System.out.println("Venta realizada: " + cantidad + " unidades de producto envasado");
-        } else {
-            System.out.println("No se puede realizar la venta");
-        }
-    }*/
  /*@Override
     public void reponerStock(int cantidad) {
         cantStock += cantidad;
@@ -106,6 +97,24 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento 
     @Override
     public String toString() {
         return "ProductoEnvasado{" + "tipoEnvase=" + tipoEnvase + ", fechaVencimiento=" + fechaVencimiento + ", calorias=" + calorias + ", porcentajeDescuento=" + porcentajeDescuento + ", esImportado=" + esImportado + '}';
+    }
+
+    @Override
+    public void vender(int cantidad) {
+        if (disponibleVentas && cantidad <= cantStock) {
+            cantStock -= cantidad;
+            System.out.println("Venta realizada: " + cantidad + " unidades de producto envasado");
+        } else {
+            System.out.println("No se puede realizar la venta");
+        }
+    }
+
+    public boolean getEsImportado() {
+        return esImportado;
+    }
+
+    public void setEsImportado(boolean esImportado) {
+        this.esImportado = esImportado;
     }
 
 }

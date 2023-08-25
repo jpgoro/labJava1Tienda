@@ -1,10 +1,9 @@
-
 package tienda.logica;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
-
 
 /**
  *
@@ -23,7 +22,7 @@ public class Tienda {
         this.saldoCaja = saldoCaja;
         this.productosEnStock = new HashMap<>();
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -60,10 +59,115 @@ public class Tienda {
         }
     }
 
+    // Lista para almacenar los productos para venta
+    private List<Producto> productosParaVenta = new ArrayList<>();
+
+    public void agregarProductoParaVenta(Producto producto) {
+        productosParaVenta.add(producto);
+    }
+
+    public void ventaDeProductos(List<Producto> productos) {
+        double totalVenta = 0;
+        boolean hayStockInsuficiente = false;
+
+        System.out.println("Detalle de la venta:");
+
+        for (Producto producto : productos) {
+            if (!producto.isDisponibleVentas()) {
+                System.out.println("El producto " + producto.getId_prod() + " " + producto.getDescripcion() + " no se encuentra disponible");
+                continue;
+            }
+
+            if (producto.getCantStock() > 0) {
+                int unidadesAVender = Math.min(producto.getCantStock(), 10);
+
+                double precioUnitario = 0;
+                if (producto instanceof Descuento) {
+                    precioUnitario = ((Descuento) producto).calcularPrecioVentaConDescuento();
+                } else {
+                    precioUnitario = producto.getPrecioUnitario();
+                }
+
+                // Aplicar impuesto del 10% para productos importados
+                if (producto instanceof ProductoEnvasado || producto instanceof Bebida) {
+                    if (producto instanceof ProductoEnvasado && ((ProductoEnvasado) producto).getEsImportado()
+                            || producto instanceof Bebida && ((Bebida) producto).getEsImportado()) {
+                        precioUnitario *= 1.10;
+                    }
+                }
+
+                // Verificar porcentaje de ganancia máximo
+                if ((producto instanceof ProductoEnvasado || producto instanceof Bebida) && precioUnitario > producto.getCostoUnidad() * 1.20) {
+                    System.out.println("El porcentaje de ganancia excede el límite para " + producto.getId_prod());
+                    continue;
+                } else if (producto instanceof ProductoLimpieza) {
+                    double porcentajeGanancia = (precioUnitario - producto.getCostoUnidad()) / producto.getCostoUnidad() * 100;
+                    if (porcentajeGanancia < 10 || porcentajeGanancia > 25) {
+                        if (!((ProductoLimpieza) producto).getTipoAplicacion().equals(TipoAplicacion.ROPA)
+                                && !((ProductoLimpieza) producto).getTipoAplicacion().equals(TipoAplicacion.MULTIUSO)) {
+                            System.out.println("El porcentaje de ganancia está fuera del rango permitido para " + producto.getId_prod());
+                            continue;
+                        }
+                    }
+                }
+
+                // Aplicar descuento y verificar si genera pérdidas
+                if (producto instanceof Descuento) {
+                    double precioDescuento = ((Descuento) producto).calcularPrecioVentaConDescuento();
+                    if (precioDescuento > producto.getCostoUnidad()) {
+                        precioUnitario = precioDescuento;
+                    } else {
+                        System.out.println("El descuento registrado para el producto " + producto.getId_prod() + " no pudo ser aplicado");
+                        continue;
+                    }
+                }
+
+                totalVenta += precioUnitario * unidadesAVender;
+
+                producto.vender(unidadesAVender);
+                producto.setDisponibleVentas(false);
+
+                System.out.println(producto.getId_prod() + " " + producto.getDescripcion() + " " + unidadesAVender + " x " + precioUnitario);
+            } else {
+                hayStockInsuficiente = true;
+            }
+        }
+
+        System.out.println("TOTAL VENTA: " + totalVenta);
+
+        if (hayStockInsuficiente) {
+            System.out.println("Hay productos con stock disponible menor al solicitado");
+        }
+    }
+
+    public void comprarProducto(Producto producto, int cantidad) {
+        double montoTotal = producto.getPrecioUnitario() * cantidad;
+
+        if (montoTotal > saldoCaja) {
+            System.out.println("El producto no puede ser agregado a la tienda debido a saldo insuficiente en la caja");
+            return;
+        }
+
+        if (productosEnStock.size() + cantidad > maxProductosEnStock) {
+            System.out.println("No se pueden agregar más productos a la tienda. Stock máximo alcanzado.");
+            return;
+        }
+
+        producto.setCantStock(producto.getCantStock() + cantidad);
+        saldoCaja -= montoTotal;
+
+        if (!productosEnStock.containsKey(producto.getId_prod())) {
+            productosEnStock.put(producto.getId_prod(), producto);
+        }
+
+        System.out.println("Compra realizada: " + cantidad + " unidades de " + producto.getDescripcion());
+    }
+
     public void mostrarProductosEnStock() {
         System.out.println("Productos en stock:");
         for (Producto producto : productosEnStock.values()) {
             System.out.println("ID: " + producto.getId_prod() + ", Descripción: " + producto.getDescripcion());
         }
     }
+
 }

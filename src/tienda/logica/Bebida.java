@@ -123,6 +123,24 @@ public class Bebida extends Producto implements Comestible, Descuento {
     public String toString() {
         return "Bebida{" + "esAlcoholica=" + esAlcoholica + ", graduacionAlcoholica=" + graduacionAlcoholica + ", fechaVencimiento=" + fechaVencimiento + ", calorias=" + calorias + ", porcentajeDescuento=" + porcentajeDescuento + ", esImportado=" + esImportado + '}';
     }
+
+    @Override
+    public void vender(int cantidad) {
+         if (disponibleVentas && cantidad <= cantStock) {
+        cantStock -= cantidad;
+        System.out.println("Venta realizada: " + cantidad + " unidades de producto envasado");
+    } else {
+        System.out.println("No se puede realizar la venta");
+    }
+    }
+
+    public boolean getEsImportado() {
+        return esImportado;
+    }
+
+    public void setEsImportado(boolean esImportado) {
+        this.esImportado = esImportado;
+    }
     
     
 
