@@ -1,7 +1,7 @@
-package tienda.logica;
+package labJava1Tienda.logica;
 
 import java.time.LocalDate;
-import tienda.util.FechaUtil;
+import labJava1Tienda.util.FechaUtil;
 
 /**
  *

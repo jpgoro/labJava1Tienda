@@ -1,9 +1,10 @@
-package tienda.logica;
+package labJava1Tienda.logica;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -168,6 +169,40 @@ public class Tienda {
         for (Producto producto : productosEnStock.values()) {
             System.out.println("ID: " + producto.getId_prod() + ", Descripción: " + producto.getDescripcion());
         }
+    }
+
+    //------Requerimientos adicionales usando API Streams------
+    
+    //busca productos que sean comestibles no importados y tengan un descuento menor al porcentaje proporcionado
+    public List<String> obtenerComestiblesConMenorDescuento(double porcentajeDescuento) {
+        return productosEnStock.values()
+                .stream()
+                .filter(producto -> (producto instanceof Bebida || producto instanceof ProductoEnvasado)
+                && producto instanceof Descuento && ((Descuento) producto).getPorcentajeDescuento() < porcentajeDescuento)
+                .filter(producto -> {
+                    if (producto instanceof Bebida) {
+                        return !((Bebida) producto).getEsImportado();
+                    } else if (producto instanceof ProductoEnvasado) {
+                        return !((ProductoEnvasado) producto).getEsImportado();
+                    }
+                    return false;
+                })
+                .map(producto -> producto.getDescripcion().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+    }
+    //busca productos que con descuento, que tengan una utilidad inferior al porcentaje proporcionado y luego imprime su información
+    public void listarProductosConUtilidadesInferiores(double porcentajeUtilidad) {
+        productosEnStock.values()
+                .stream()
+                .filter(producto -> producto instanceof Descuento)
+                .filter(producto -> {
+                    double precioVenta = ((Descuento) producto).calcularPrecioVentaConDescuento();
+                    return precioVenta > producto.getCostoUnidad() && (precioVenta - producto.getCostoUnidad()) / producto.getCostoUnidad() * 100 < porcentajeUtilidad;
+                })
+                .forEach(producto -> System.out.println("Código: " + producto.getId_prod()
+                + ", Descripción: " + producto.getDescripcion()
+                + ", Cantidad en Stock: " + producto.getCantStock()));
     }
 
 }

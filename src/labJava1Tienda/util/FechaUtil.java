@@ -1,4 +1,4 @@
-package tienda.util;
+package labJava1Tienda.util;
 
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;

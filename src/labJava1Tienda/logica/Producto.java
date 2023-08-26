@@ -1,4 +1,4 @@
-package tienda.logica;
+package labJava1Tienda.logica;
 
 /**
  *
