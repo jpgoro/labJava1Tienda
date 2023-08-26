@@ -65,7 +65,7 @@ public abstract class Producto {
         this.costoUnidad = costoUnidad;
     }
 
-    public boolean isDisponibleVentas() {
+    public boolean getDisponibleVentas() {
         return disponibleVentas;
     }
 

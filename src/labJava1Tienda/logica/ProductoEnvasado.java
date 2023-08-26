@@ -94,10 +94,6 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento 
         return precioUnitario - (precioUnitario * porcentajeDescuento / 100);
     }
 
-    @Override
-    public String toString() {
-        return "ProductoEnvasado{" + "tipoEnvase=" + tipoEnvase + ", fechaVencimiento=" + fechaVencimiento + ", calorias=" + calorias + ", porcentajeDescuento=" + porcentajeDescuento + ", esImportado=" + esImportado + '}';
-    }
 
     @Override
     public void vender(int cantidad) {
@@ -116,5 +112,11 @@ public class ProductoEnvasado extends Producto implements Comestible, Descuento 
     public void setEsImportado(boolean esImportado) {
         this.esImportado = esImportado;
     }
+
+    @Override
+    public String toString() {
+        return "ProductoEnvasado{" + "tipoEnvase=" + tipoEnvase + ", fechaVencimiento=" + fechaVencimiento + ", calorias=" + calorias + ", porcentajeDescuento=" + porcentajeDescuento + ", esImportado=" + esImportado + '}';
+    }
+    
 
 }

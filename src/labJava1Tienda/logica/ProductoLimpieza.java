@@ -73,10 +73,6 @@ public class ProductoLimpieza extends Producto implements Descuento {
         return precioUnitario - (precioUnitario * porcentajeDescuento / 100);
     }
 
-    @Override
-    public String toString() {
-        return "ProductoLimpieza{" + "tipoAplicacion=" + tipoAplicacion + ", porcentajeDescuento=" + porcentajeDescuento + '}';
-    }
 
     @Override
     public void vender(int cantidad) {
@@ -87,6 +83,13 @@ public class ProductoLimpieza extends Producto implements Descuento {
         System.out.println("No se puede realizar la venta");
     }
     }
+
+    @Override
+    public String toString() {
+        return "ProductoLimpieza{" + "tipoAplicacion=" + tipoAplicacion + ", porcentajeDescuento=" + porcentajeDescuento + '}';
+    }
+    
+    
     
     
 

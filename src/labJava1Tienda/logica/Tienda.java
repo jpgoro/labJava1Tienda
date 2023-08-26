@@ -16,12 +16,22 @@ public class Tienda {
     private int maxProductosEnStock;
     private double saldoCaja;
     private Map<String, Producto> productosEnStock;
+    private List<Producto> productosParaVenta = new ArrayList<>();
 
     public Tienda(String nombre, int maxProductosEnStock, double saldoCaja) {
         this.nombre = nombre;
         this.maxProductosEnStock = maxProductosEnStock;
         this.saldoCaja = saldoCaja;
         this.productosEnStock = new HashMap<>();
+        this.productosParaVenta = new ArrayList<>();
+    }
+
+    public List<Producto> getProductosParaVenta() {
+        return productosParaVenta;
+    }
+
+    public void setProductosParaVenta(List<Producto> productosParaVenta) {
+        this.productosParaVenta = productosParaVenta;
     }
 
     public String getNombre() {
@@ -61,7 +71,7 @@ public class Tienda {
     }
 
     // Lista para almacenar los productos para venta
-    private List<Producto> productosParaVenta = new ArrayList<>();
+    //private List<Producto> productosParaVenta = new ArrayList<>();
 
     public void agregarProductoParaVenta(Producto producto) {
         productosParaVenta.add(producto);
@@ -74,7 +84,7 @@ public class Tienda {
         System.out.println("Detalle de la venta:");
 
         for (Producto producto : productos) {
-            if (!producto.isDisponibleVentas()) {
+            if (!producto.getDisponibleVentas()) {
                 System.out.println("El producto " + producto.getId_prod() + " " + producto.getDescripcion() + " no se encuentra disponible");
                 continue;
             }
